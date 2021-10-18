@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.demo.huawei.push.bridge">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <application
+        android:supportsRtl="true" android:name=".ServiceBridge">
+
+        <service android:name=".BridgePushService">
+            <intent-filter >
+                <action android:name="BridgePushService"/>
+            </intent-filter>
+        </service>
+
+
+<!--        Indigitall requirements-->
+        <service android:name="com.indigitall.android.services.StatisticService"/>
+
+        <!-- Daily sync of device data -->
+        <service android:name="com.indigitall.android.services.NightService"/>
+
+        <!-- To start services when you restart the device -->
+        <receiver android:name="com.indigitall.android.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+
+
+<!--        HMS direct-->
+        <service
+            android:name=".BridgeHmsMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>
