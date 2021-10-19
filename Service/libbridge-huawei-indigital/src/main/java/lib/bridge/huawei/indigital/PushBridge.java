@@ -10,18 +10,27 @@ import android.os.IBinder;
 
 public class PushBridge {
 
-    PushBridgeDelegate delegate;
-    final static String SERVICE_NAME = "BridgePushService";
-    final static String HMS_BROADCAST_ACTION ="hms.notification";
+    private PushBridgeDelegate delegate;
+    private final static String SERVICE_NAME = "BridgePushService";
+    private final static String HMS_BROADCAST_ACTION ="hms.notification";
+    private static PushBridge instance;
 
 
-    public PushBridge(Context context, PushBridgeDelegate delegate){
+    private PushBridge(PushBridgeDelegate delegate, Context context){
         this.delegate = delegate;
         this.init(context);
+
     }
 
 
-     void init(Context context){
+    public static void start(Context context, PushBridgeDelegate delegate){
+       if (instance == null){
+           instance =new PushBridge(delegate, context);
+       }
+
+    }
+
+    private void init(Context context){
         Intent intent = new Intent(SERVICE_NAME);
         Intent explicit = Utils.convertImplicitIntentToExplicitIntent(intent, context);
 
@@ -52,4 +61,6 @@ public class PushBridge {
             }
         },new IntentFilter(HMS_BROADCAST_ACTION));
     }
+
+
 }

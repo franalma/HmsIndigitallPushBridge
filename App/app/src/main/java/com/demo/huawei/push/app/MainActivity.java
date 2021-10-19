@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new PushBridge(getApplicationContext(), new PushBridgeDelegate() {
+        PushBridge.start(getApplicationContext(), new PushBridgeDelegate() {
             @Override
             public void onInit(boolean status) {
                 System.out.println("-->Connected: "+status);
